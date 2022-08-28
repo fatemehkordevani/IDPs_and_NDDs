@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 jupyterlab = "*"
 dataframe-image = "*"
+kaleido = "*"
 
 [dev-packages]
 
