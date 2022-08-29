@@ -81,7 +81,7 @@ if __name__ == '__main__':
     sb.set_title('SNV residue variations', fontsize=40)
     sb.set_xlabel('Alternate residues', fontsize=25)
     sb.set_ylabel('Reference residues', fontsize=25)
-    plt.savefig(cfg.plots['hm'] + '/residue-transition-hmap.png', dpi=120)
+    plt.savefig(cfg.plots['hm'] + '/residue-transition-hmap-new.png', dpi=120)
     plt.show()
 
     # residue_heatmapper([in_idr_vars, all_snv], ['SNV-associated Residue transitions - in IDRs',

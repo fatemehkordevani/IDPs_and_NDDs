@@ -163,18 +163,20 @@ def clinvar_mut_data_maker():
     clinvar = clinvar.loc[(clinvar['ClinicalSignificance'] == 'Pathogenic') |
                           (clinvar['ClinicalSignificance'] == 'Likely pathogenic')
                           | (clinvar['ClinicalSignificance'] == 'Pathogenic/Likely pathogenic')]
-    clinvar = clinvar.loc[clinvar['PhenotypeList'] != 'not provided']
+    # clinvar = clinvar.loc[clinvar['PhenotypeList'] != 'not provided']
+    print(clinvar)
     clinvar['var_id'] = clinvar.index + 1000
     clinvar['var_id'] = 'var_' + clinvar['var_id'].astype(str)
     print(clinvar)
     ## getting mutation positions
-    clinvar[['Name', 'pr_change']] = clinvar['Name'].str.split('p\.', 1, expand=True)
-    clinvar = clinvar.dropna(subset=['pr_change'])
-    clinvar['pr_change'] = clinvar.pr_change.str.extract('(^([A-Z])([a-z])([a-z])(\d+)(.+))', expand=False)[0]
+    # clinvar[['Name', 'pr_change']] = clinvar['Name'].str.split('\(p\.', 1, expand=True)
+    # clinvar = clinvar.dropna(subset=['pr_change'])
+    clinvar['pr_change'] = clinvar.Name.str.extract('(p\.([A-Z])([a-z])([a-z])(\d+)(.+))', expand=False)[0]
     # clinvar['pr_change'] = clinvar['pr_change'].str.split('p.', 1, expand=True)[0]
     clinvar['pr_change'] = clinvar.pr_change.str.replace(')', '')
+    clinvar['pr_change'] = clinvar.pr_change.str.replace('p\.', '')
     clinvar = clinvar.dropna(subset=['pr_change'])
-    clinvar = clinvar.loc[~clinvar.pr_change.str.contains('=')]
+    # clinvar = clinvar.loc[~clinvar.pr_change.str.contains('=')]
     clinvar['ref_aa'] = clinvar['pr_change'].str[:3]
     clinvar['alt_aa'] = clinvar['pr_change'].str[-3:]
     clinvar['pr_pos'] = clinvar.pr_change.str.extract('(\d+)')
@@ -220,7 +222,7 @@ if __name__ == '__main__':
     ## count number of vars and var/dis ratio
     clin_mobidb_ndd = var_cnt_residue_normaliezer(var_countcol_creator(clin_mobidb_ndd))
     ##
-    # clin_mobidb_ndd.to_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb.csv')
+    clin_mobidb_ndd.to_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb.csv')
     clin_mobidb_ndd = pd.read_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb.csv')
     in_idr_vars = clin_mobidb_ndd.loc[clin_mobidb_ndd['isin_idr'] == 1]
     ## Vars in LIPs

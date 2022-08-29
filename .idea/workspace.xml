@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d172e6fc-798a-4f41-8644-8456cb41b467" name="Changes" comment="new project + clinvar.py + handling phenotypes">
-      <change afterPath="$PROJECT_DIR$/src/disprot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/distribution.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hcGenes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/llps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mobibool.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/residue_transitions.py" afterDir="false" />
+    <list default="true" id="d172e6fc-798a-4f41-8644-8456cb41b467" name="Changes" comment="many changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.ipynb_checkpoints/phens_similarity-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/.ipynb_checkpoints/phens_similarity-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/clinvar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/clinvar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/distribution.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/distribution.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hcGenes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hcGenes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/phens_similarity.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/phens_similarity.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/residue_transitions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/residue_transitions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +60,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.distribution">
+  <component name="RunManager" selected="Python.residue_transitions">
     <configuration name="clinvar" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -173,9 +166,6 @@
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -211,7 +201,7 @@
       <workItem from="1661247607824" duration="4897000" />
       <workItem from="1661328910551" duration="3011000" />
       <workItem from="1661352314710" duration="52047000" />
-      <workItem from="1661692668108" duration="15416000" />
+      <workItem from="1661692668108" duration="25381000" />
     </task>
     <task id="LOCAL-00001" summary="new project + clinvar.py + handling phenotypes">
       <created>1661156886723</created>
@@ -220,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661156886723</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="many changes">
+      <created>1661717012692</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1661717012692</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,6 +236,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new project + clinvar.py + handling phenotypes" />
-    <option name="LAST_COMMIT_MESSAGE" value="new project + clinvar.py + handling phenotypes" />
+    <MESSAGE value="many changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="many changes" />
   </component>
 </project>

@@ -32,6 +32,7 @@ data = {
     'fs-str': absolute + 'data/llps/string',
     'clin': absolute + 'data/clinvar',
     'cos': absolute + 'data/cosmic',
+    'go': absolute + 'data/string-go',
 
 }
 plots = {
@@ -47,5 +48,6 @@ plots = {
     'vp-cf': absolute + 'plots/violinplot/cf',
     'vp-cc': absolute + 'plots/violinplot/cc',
     'vp-len': absolute + 'plots/violinplot/length',
+    'go': absolute + 'plots/go-tables',
 
 }

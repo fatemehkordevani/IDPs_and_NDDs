@@ -14,7 +14,7 @@ def variant_in_out_idr_stacked_df(df):
         in_idr = len(in_idr_df.loc[(in_idr_df['phenotype'] == phen) , 'var_id'])
         out_idr = len(out_idr_df.loc[(out_idr_df['phenotype'] == phen) , 'var_id'])
         phens_count_d[phen] = [in_idr, out_idr]
-    df_output = pd.DataFrame(phens_count_d, index= ['Variants inside IDRs', 'Variants outside IDRs'])
+    df_output = pd.DataFrame(phens_count_d, index= ['Mutations inside IDRs', 'Mutations outside IDRs'])
     df_output = df_output.transpose()
     return df_output
 
@@ -22,7 +22,7 @@ def variant_in_out_idr_stacked_df(df):
 def stacked_percentage_barplotter(df, fig_name):
     # creates stacked barplot with percentages from categorized binding df,
     df_stack = df.apply(lambda x: x * 100 / sum(x), axis=1)
-    df_stack.plot(kind='bar', figsize=(25, 15), stacked=True, colormap='RdYlGn').tick_params(axis='both',
+    df_stack.plot(kind='bar', figsize=(25, 15), stacked=True, colormap='RdYlBu').tick_params(axis='both',
                                                                                                 labelsize=16)
     # from: towardsdatascience.com/100-stacked-charts-in-python-6ca3e1962d2b
     # and stackoverflow.com/questions/51495982/display-totals-and-percentage-in-stacked-bar-chart-using-dataframe-plot
@@ -33,14 +33,17 @@ def stacked_percentage_barplotter(df, fig_name):
                 plt.text(x=n - 0.17,
                          y=(y_loc - percent) + (percent / 2),
                          s=f'{count}\n({np.round(percent, 1)}%)',
-                         color="black",
-                         fontsize=20,
+                         color="white",
+                         fontsize=24,
                          fontweight="bold")
                          # rotation='horizontal')
     plt.legend(bbox_to_anchor=(1.01, 1.02), borderaxespad=0, prop={'size': 16})
-    plt.xlabel('Phenotypes', fontsize=20)
-    plt.ylabel('Variants distribution', fontsize=20)
-    plt.suptitle('Distribution of mutations within and outside of LIPs', fontsize=30)
+    plt.xlabel('Phenotypes', fontsize=26)
+    plt.ylabel('Mutation distribution', fontsize=26)
+    plt.xticks(fontsize=26, rotation=0)
+    plt.yticks(fontsize=26, rotation=0)
+    plt.legend(loc=1, prop={'size': 22})
+    plt.suptitle('Distribution of mutations within and outside of IDRs', fontsize=30)
     plt.tight_layout()
     plt.savefig(cfg.plots['bar'] + '/' + fig_name + '.png')
     # plt.show()
@@ -59,6 +62,7 @@ if __name__ == '__main__':
 
     # modification_types_freq = in_idr_vars['Type'].value_counts().to_frame().reset_index()
     # modification_types_freq = modification_types_freq.rename(columns={'Type': 'Frequency', 'index': 'Modification types'})
+    # modification_types_freq = modification_types_freq.loc[(modification_types_freq['Modification types'] != 'protein only') & (modification_types_freq['Modification types'] != 'Inversion')]
     # plt.bar(modification_types_freq['Modification types'].tolist(), modification_types_freq['Frequency'].tolist())
     # # plt.yscale("log")
     # plt.xticks(modification_types_freq['Modification types'].tolist(), rotation='90', ha='center')
