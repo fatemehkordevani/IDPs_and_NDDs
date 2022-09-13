@@ -30,9 +30,13 @@ data = {
     'mlo-d': absolute + 'data/llps/mlo-dis',
     'mlo': absolute + 'data/llps/insight-into-llps',
     'fs-str': absolute + 'data/llps/string',
+    'fs-df': absolute + 'data/llps/disphase',
+    'fs-dr': absolute + 'data/llps/drllps',
     'clin': absolute + 'data/clinvar',
     'cos': absolute + 'data/cosmic',
     'go': absolute + 'data/string-go',
+    'elm': absolute + 'data/elm',
+    'ph': absolute + 'data/phens',
 
 }
 plots = {

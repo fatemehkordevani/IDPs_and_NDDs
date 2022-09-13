@@ -53,6 +53,9 @@ def phasep():
 if __name__ == '__main__':
     ## the two llps datasets have 28 proteins in common
     ndd_subdf = pd.read_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb.csv')
+    ndd_prs = ndd_subdf.loc[(ndd_subdf['phenotype'] == 'ASD') | (ndd_subdf['phenotype'] == 'ID') | (ndd_subdf['phenotype'] == 'Ep')]
+    ndd_prs = ndd_prs['acc'].unique().tolist()
+
 
     ndd_varin_phasep_df = var_llps_df_merger('phasep')  # 2296 # 840
     ndd_varin_phasepro_df = var_llps_df_merger('phasepro')  # 134 # 30
@@ -61,28 +64,43 @@ if __name__ == '__main__':
     ndd_varin_phasepro_lst = ndd_varin_phasepro_df['acc'].unique().tolist()  # 5
     ## new mlo dis based on my ndds, var in idr ndds, merged two llps dfs
     ndd_llps_merged_lst = ndd_varin_phasep_lst + ndd_varin_phasepro_lst
-    print('\n'.join(ndd_llps_merged_lst))
+
+    ## Disphase
+    disphase_pr_lst = pd.read_csv(cfg.data['fs-df'] + '/disphase_pr-lst.csv')
+    disphase_pr_lst = disphase_pr_lst['uniprot_acc'].unique().tolist()
+    ## NDD intersect with disphase
+    ndd_disphase = list(set(ndd_prs) & set(disphase_pr_lst))
+    # print(','.join(ndd_disphase))
+
+    ## DrLLPS
+    drllps = pd.read_excel(cfg.data['fs-dr'] + '/Table S1.xlsx')
+    drllps.columns = drllps.iloc[0]
+    drllps_prs = drllps['UniProt ID'].unique().tolist()
+    disph_drllps = list(set(drllps_prs) & set(ndd_disphase))
+    drllps = drllps.loc[drllps['UniProt ID'].isin(disph_drllps)]
+    drllps_types = drllps.groupby('LLPS Type').count()
+
 
     ## file from this paper:https://www.sciencedirect.com/science/article/pii/S2001037021002804
     ## challenge, open this file correctly, for now not very necessary
     # mlo = pd.read_excel(cfg.data['mlo']+'/complementary-data-paper-S2001037021002804.xlsx', engine='openpyxl')
     ## STRING analysis of ndd_llps_merged_lst with 46 total proteins
-    molecular_function = pd.read_csv(cfg.data['fs-str'] + '/enrichment.Function.tsv', sep='\t')
-    cell_process = pd.read_csv(cfg.data['fs-str'] + '/enrichment.Process.tsv', sep='\t')
+    # molecular_function = pd.read_csv(cfg.data['fs-str'] + '/enrichment.Function.tsv', sep='\t')
+    # cell_process = pd.read_csv(cfg.data['fs-str'] + '/enrichment.Process.tsv', sep='\t')
     # count number of variants in llps dataset
-    llps_ndd_dismaj = ndd_subdf.loc[ndd_subdf.acc.isin(ndd_llps_merged_lst)]
+    llps_ndd_dismaj = ndd_subdf.loc[ndd_subdf.acc.isin(ndd_disphase)]
     llps_ndd_dismaj = llps_ndd_dismaj.drop_duplicates()
-    llps_ndd_dismaj = llps_ndd_dismaj.rename(columns={"in_idr_vars_perc": "IDR variant fraction (NDD-associated Proteins with LLPS roles)"})
-    # g = sns.boxplot(x=llps_ndd_dismaj['IDR variant fraction (NDD-associated Proteins with LLPS roles)'])
+    llps_ndd_dismaj = llps_ndd_dismaj.rename(columns={"in_idr_vars_perc": "IDR mutation fraction (NDD-associated Proteins with LLPS roles)"})
+    # g = sns.violinplot(x=llps_ndd_dismaj['IDR mutation fraction (NDD-associated Proteins with LLPS roles)'])
     # g.set_xlim(0, 1)
-    # plt.savefig(cfg.plots['vp'] + '/ndd-llps-roles1.png')
+    # plt.savefig(cfg.plots['vp'] + '/ndd-llps-roles-disphase.png')
     #
     # plt.show()
     #
-    # ndd_subdf = ndd_subdf.rename(columns={"in_idr_vars_perc": "IDR variant fraction (All NDD-associated proteins)"})
-    # g = sns.boxplot(x=ndd_subdf['IDR variant fraction (All NDD-associated proteins)'])
+    # ndd_subdf = ndd_subdf.rename(columns={"in_idr_vars_perc": "IDR mutation fraction (All NDD-associated proteins)"})
+    # g = sns.violinplot(x=ndd_subdf['IDR mutation fraction (All NDD-associated proteins)'])
     # g.set_xlim(0, 1)
-    # plt.savefig(cfg.plots['vp'] + '/all-ndd1.png')
+    # plt.savefig(cfg.plots['vp'] + '/all-ndd-HC.png')
     # plt.show()
     mlo = pd.read_csv(cfg.data['mlo-d'] + '/mlodisdb_components.csv')
     mlo = mlo.loc[mlo.Entry.isin(ndd_llps_merged_lst)]
@@ -90,5 +108,6 @@ if __name__ == '__main__':
     mlo_count = mlo_count.reset_index()
     mlo_count = mlo_count.drop(columns=['Entry name', 'Gene names', 'Source'])
     mlo_count = mlo_count.rename(columns={'Entry': 'Count'})
+
 
 

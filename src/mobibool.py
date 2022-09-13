@@ -7,6 +7,7 @@ import brain as bd
 import matplotlib.pyplot as plt
 from matplotlib import ticker as mticker
 import seaborn as sns
+import phenotypes as ph
 
 
 def mobi_phens_col_maker(df1_mobi, df2, df3):
@@ -167,25 +168,21 @@ if __name__ == '__main__':
         feature_dict[feature].append(cf_lim_feature_dict[feature])
 
     # in the end use decorator thing with the @
-    phens_lst = ['Human', 'Brain', 'ASD', 'Ep', 'ID', 'Cancer']
+    phens_lst = ['Human', 'Brain', 'ASD', 'Ep', 'ID', 'ADHD', 'SCZ', 'Cancer', 'T2D']
     ## import dfs # (mobidb)
     mobidb = pd.read_csv(cfg.data['clin'] + '/mobidb_result_2022-08-08T13_12_39.379Z.tsv', sep='\t')
     ## NDD
-    hc = pd.read_csv(cfg.data['hc'] + '/smaller-hc-columns.csv')
-    ndd_subdf = hc_all_phens_generator(hc)
-    cosmic = cosmic_phen_df_maker()
-    ndd_subdf = pd.concat([ndd_subdf, cosmic])
-    ndd_subdf.to_csv(cfg.data['hc'] + 'smaller-hc-with-phens-column')
-    ndd_pr_lst = ndd_subdf['acc'].unique().tolist()  # 1597
+    phens_subdf = pd.read_csv(cfg.data['hc'] + '/smaller-hc-with-phens-column')
+    ndd_pr_lst = phens_subdf['acc'].unique().tolist()  # 1597
     ## brain
     brain_prot_lst = bd.brain_pr_lst_generator()  # n: 8320
     brain_subdf = DataFrame(brain_prot_lst, columns=['acc'])
     # mutual_brain_ndd_prs_lst = [i for i in brain_prot_lst if i in ndd_pr_lst]  # 455
     # # ## Mobidb, Brain and Ndd dfs with all variations (in/out of IDR)
-    # # mobidb, brain_subdf, ndd_subdf = var.all_vars_or_vars_inidr('all')
+    # # mobidb, brain_subdf, phens_subdf = var.all_vars_or_vars_inidr('all')
     # #
     # new mobidb with one column for phens of NDD, human, and brain
-    mobidb = mobi_phens_col_maker(mobidb, brain_subdf, ndd_subdf)
+    mobidb = mobi_phens_col_maker(mobidb, brain_subdf, phens_subdf)
     mobidb.to_csv(cfg.data['vars'] + '/all-vars-mobidb-plus-phenotype-column.csv')
     #
     mobi_feature_df = mobidb[mobidb.feature.isin(features_lst)]
@@ -196,31 +193,31 @@ if __name__ == '__main__':
     # content count
     for key in feature_dict.keys():
         box_plotter(data=mobi_cont_count_df.loc[(slice(None), key), phens_lst],
-                    save_route=(cfg.plots['bp-cc'] + '/' + key + '-cc' + '.png'),
+                    save_route=(cfg.plots['bp-cc'] + '/' + key + '-cc' + '1.png'),
                     title=feature_dict[key][0], ylabel='Residues count')
     # content fraction
     for key in feature_dict.keys():
         box_plotter(data=mobi_disorder_df.loc[(slice(None), key), phens_lst],
-                    save_route=(cfg.plots['bp-cf'] + '/' + key + '-cf' + '.png'),
+                    save_route=(cfg.plots['bp-cf'] + '/' + key + '-cf' + '1.png'),
                     title=feature_dict[key][0], ylabel='Content (%)')
     # Length
     box_plotter(data=mobi_length_df.loc[(slice(None)), phens_lst],
-                save_route=(cfg.plots['bp-len'] + '/' + 'len4200' + '.png'),
+                save_route=(cfg.plots['bp-len'] + '/' + 'len4200' + '1.png'),
                 title='Protein sequence length', ylabel='Residues count')
     ## Violin plots
     # content count
     for key in feature_dict.keys():
         violin_plotter(data=mobi_cont_count_df.loc[(slice(None), key), phens_lst],
-                       save_route=(cfg.plots['vp-cc'] + '/' + key + '-cc' + '.png'),
+                       save_route=(cfg.plots['vp-cc'] + '/' + key + '-cc' + '1.png'),
                        title=feature_dict[key][0], ylabel='Residues count', ylim=feature_dict[key][1])
     # content fraction
     for key in feature_dict.keys():
         violin_plotter(data=mobi_disorder_df.loc[(slice(None), key), phens_lst],
-                       save_route=(cfg.plots['vp-cf'] + '/' + key + '-cf' + '.png'),
+                       save_route=(cfg.plots['vp-cf'] + '/' + key + '-cf' + '1.png'),
                        title=feature_dict[key][0], ylabel='Content (%)', ylim=feature_dict[key][2])
     # Length
     violin_plotter(data=mobi_length_df.loc[(slice(None)), phens_lst],
-                   save_route=(cfg.plots['vp-len'] + '/' + 'len4200' + '.png'),
+                   save_route=(cfg.plots['vp-len'] + '/' + 'len4200' + '1.png'),
                    title='Protein sequence length', ylabel='Residues count', ylim=4200)
 
     ## writing data statistics to CSV

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d172e6fc-798a-4f41-8644-8456cb41b467" name="Changes" comment="many changes">
+    <list default="true" id="d172e6fc-798a-4f41-8644-8456cb41b467" name="Changes" comment="all works well">
+      <change afterPath="$PROJECT_DIR$/src/elm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/phenotypes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.ipynb_checkpoints/phens_similarity-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/.ipynb_checkpoints/phens_similarity-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/distribution.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/distribution.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hcGenes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hcGenes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/llps.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/llps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mobibool.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mobibool.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/phens_similarity.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/phens_similarity.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/residue_transitions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/residue_transitions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,13 +48,6 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
-  <component name="PyConsoleOptionsProvider">
-    <option name="myPythonConsoleState">
-      <console-settings>
-        <option name="useSoftWraps" value="true" />
-      </console-settings>
-    </option>
-  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -60,7 +57,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.residue_transitions">
+  <component name="RunManager" selected="Python.distribution">
     <configuration name="clinvar" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -87,6 +84,9 @@
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -102,10 +102,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="elm" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="IDPs_and_NDDs" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/elm.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="hcGenes" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -147,6 +172,9 @@
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -162,10 +190,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="phenotypes" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="IDPs_and_NDDs" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/phenotypes.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="residue_transitions" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -201,7 +254,14 @@
       <workItem from="1661247607824" duration="4897000" />
       <workItem from="1661328910551" duration="3011000" />
       <workItem from="1661352314710" duration="52047000" />
-      <workItem from="1661692668108" duration="25381000" />
+      <workItem from="1661692668108" duration="25403000" />
+      <workItem from="1661849751959" duration="7732000" />
+      <workItem from="1661949733143" duration="4047000" />
+      <workItem from="1662367998487" duration="134000" />
+      <workItem from="1662468627389" duration="20149000" />
+      <workItem from="1662714031289" duration="5199000" />
+      <workItem from="1662972241691" duration="4358000" />
+      <workItem from="1663061683405" duration="599000" />
     </task>
     <task id="LOCAL-00001" summary="new project + clinvar.py + handling phenotypes">
       <created>1661156886723</created>
@@ -217,7 +277,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661717012692</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="all works well">
+      <created>1661788796998</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1661788796998</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,6 +304,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new project + clinvar.py + handling phenotypes" />
     <MESSAGE value="many changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="many changes" />
+    <MESSAGE value="all works well" />
+    <option name="LAST_COMMIT_MESSAGE" value="all works well" />
   </component>
 </project>

@@ -5,16 +5,16 @@ import numpy as np
 
 
 def variant_in_out_idr_stacked_df(df):
-    in_idr_df = df.loc[df['isin_idr'] == 1]
-    out_idr_df = df.loc[df['isin_idr'] == 0]
-    phens_lst = ['ASD', 'ID', 'Ep', 'Cancer']
+    in_idr_df = df.loc[df['isin_lip'] == 1]
+    out_idr_df = df.loc[df['isin_lip'] == 0]
+    phens_lst = ['ASD', 'Ep', 'ID', 'ADHD', 'SCZ', 'Cancer', 'T2D']
     phens_count_d = {}
     for phen in phens_lst:
         ## below lddt 50
         in_idr = len(in_idr_df.loc[(in_idr_df['phenotype'] == phen) , 'var_id'])
         out_idr = len(out_idr_df.loc[(out_idr_df['phenotype'] == phen) , 'var_id'])
         phens_count_d[phen] = [in_idr, out_idr]
-    df_output = pd.DataFrame(phens_count_d, index= ['Mutations inside IDRs', 'Mutations outside IDRs'])
+    df_output = pd.DataFrame(phens_count_d, index= ['Mutations inside LIPs', 'Mutations outside LIPs'])
     df_output = df_output.transpose()
     return df_output
 
@@ -43,7 +43,7 @@ def stacked_percentage_barplotter(df, fig_name):
     plt.xticks(fontsize=26, rotation=0)
     plt.yticks(fontsize=26, rotation=0)
     plt.legend(loc=1, prop={'size': 22})
-    plt.suptitle('Distribution of mutations within and outside of IDRs', fontsize=30)
+    plt.suptitle('Distribution of mutations within and outside of LIPs', fontsize=30)
     plt.tight_layout()
     plt.savefig(cfg.plots['bar'] + '/' + fig_name + '.png')
     # plt.show()
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     ndd_mobidb_lip = pd.read_csv(cfg.data['hc'] + '/mobidb_vars_in_lips_checked.csv')
 
     ## stacked bar plot of distribution of variants inside and outside idrs
-    stacked_percentage_barplotter(variant_in_out_idr_stacked_df(clin_mobidb_ndd), 'distribution of vars in out idrs')
+    stacked_percentage_barplotter(variant_in_out_idr_stacked_df(ndd_mobidb_lip), 'distribution of vars in out lips1')
 
     # modification_types_freq = in_idr_vars['Type'].value_counts().to_frame().reset_index()
     # modification_types_freq = modification_types_freq.rename(columns={'Type': 'Frequency', 'index': 'Modification types'})
