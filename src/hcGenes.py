@@ -1,7 +1,7 @@
 import pandas as pd
 import config as cfg
 import numpy as np
-from fractions import Fraction
+
 
 # downloaded from https://genetrek.pasteur.fr/ on August 23rd 2022
 # hc_genes = pd.read_csv(cfg.data['hc'] + '/genetrek-data-v6-2022-03-31.tsv', sep='\t')
@@ -113,16 +113,30 @@ def var_cnt_residue_normaliezer(df):  # gets df with count columns for vars in/o
     return df
 
 
-def clinvar_mut_data_maker():
+def clinvar_mut_data_maker(clin_sig_type):
     ## clinvar version: variant summary.txt 135,193,289	2022-08-01 17:10:07	2022-08-01 17:10:07
 
     clinvar = pd.read_csv(cfg.data['clin'] + '/variant_summary.txt', sep='\t', low_memory=False)
-    clinvar = clinvar.drop(columns=['Assembly', 'ChromosomeAccession', 'Start', 'Stop', 'PositionVCF', 'ReferenceAlleleVCF',
-                                    'AlternateAlleleVCF'])
+    clinvar = clinvar.drop(
+        columns=['Assembly', 'ChromosomeAccession', 'Start', 'Stop', 'PositionVCF', 'ReferenceAlleleVCF',
+                 'AlternateAlleleVCF'])
     clinvar = clinvar.drop_duplicates()
-    clinvar = clinvar.loc[(clinvar['ClinicalSignificance'] == 'Pathogenic') |
-                          (clinvar['ClinicalSignificance'] == 'Likely pathogenic')
-                          | (clinvar['ClinicalSignificance'] == 'Pathogenic/Likely pathogenic')]
+    if clin_sig_type == 'patho':
+        clin_sig = ['Pathogenic', 'Likely pathogenic', 'Pathogenic/Likely pathogenic', 'Pathogenic; association',
+                    'Likely pathogenic; risk factor', 'Pathogenic; risk factor', 'Pathogenic; Affects',
+                    'Pathogenic/Likely pathogenic; risk factor', 'Likely pathogenic; Affects',
+                    'Pathogenic; drug response', 'Likely pathogenic; drug response', 'Pathogenic; protective',
+                    'Pathogenic/Likely pathogenic; drug response', 'Pathogenic; association; protective',
+                    'Pathogenic; confers sensitivity', 'Likely pathogenic; association']
+    elif clin_sig_type == 'vus':
+        clin_sig = ['Uncertain significance', 'Uncertain significance; risk factor',
+                    'Uncertain significance; drug response', 'Uncertain significance; Pathogenic/Likely pathogenic',
+                    'Uncertain significance; other', 'Uncertain significance; association',
+                    'Uncertain significance; Affects']
+    clinvar = clinvar.loc[clinvar.ClinicalSignificance.isin(clin_sig)]
+    # clinvar = clinvar.loc[(clinvar['ClinicalSignificance'] == 'Pathogenic') |
+    #                       (clinvar['ClinicalSignificance'] == 'Likely pathogenic')
+    #                       | (clinvar['ClinicalSignificance'] == 'Pathogenic/Likely pathogenic')]
     # clinvar = clinvar.loc[clinvar['PhenotypeList'] != 'not provided']
     ## getting mutation positions
     # clinvar[['Name', 'pr_change']] = clinvar['Name'].str.split('\(p\.', 1, expand=True)
@@ -143,39 +157,56 @@ def clinvar_mut_data_maker():
     return clinvar
 
 
-if __name__ == '__main__':
+def var_in_idr_lip_dfs(clin_phen, mobi):
+    mobi_dis = mobi.loc[mobi['feature'] == 'prediction-disorder-th_50']  # (77629, 6)
+    clin_mobi_ndd = pd.merge(clin_phen, mobi_dis, on='acc', how='inner')  # (35260, 37)
+    ## check if modification position is in idr
+    clin_mobi_ndd = mutidr_bool_array_maker(clin_mobi_ndd, 'isin_idr')
+    ## count number of vars and var/dis ratio
+    clin_mobi_ndd = var_cnt_residue_normaliezer(var_countcol_creator(clin_mobi_ndd))
+    clin_mobi_ndd.to_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb-VUS.csv')
+    in_idr_vars = clin_mobi_ndd.loc[clin_mobi_ndd['isin_idr'] == 1]
+    # clin_mobidb_ndd = pd.read_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb.csv')
+    in_idr_var_ids = in_idr_vars['var_id'].unique().tolist()
+    ## Vars in LIPs
+    mobi_lip = mobi.loc[mobi['feature'] == 'prediction-lip-anchor']
+    ndd_mobi_lip = pd.merge(clin_phen, mobi_lip, left_on='acc', right_on='acc', how='inner')  # ()
+    ndd_mobi_lip = ndd_mobi_lip.loc[ndd_mobi_lip.var_id.isin(in_idr_var_ids)]
+    ndd_mobi_lip = mutidr_bool_array_maker(ndd_mobi_lip, 'isin_lip')
+    ndd_mobi_lip.to_csv(cfg.data['hc'] + '/mobidb_vars_in_lips_checked-VUS.csv')
+    return clin_mobi_ndd, ndd_mobi_lip
 
-    # hc = pd.read_csv(cfg.data['hc'] + '/smaller-hc-with-phens-column')
-    # clinvar = clinvar_mut_data_maker()
-    # ## merge my protein list with clinvar
-    # clinvar_ndd = pd.merge(hc, clinvar, left_on='Gene_name', right_on='GeneSymbol')
-    # clinvar_ndd.to_csv(cfg.data['hc'] + '/clinvar_and_phenotypes_mutation_positions.csv')
+
+if __name__ == '__main__':
+    hc = pd.read_csv(cfg.data['hc'] + '/smaller-hc-with-phens-column')
+    clinvar = clinvar_mut_data_maker('patho')
+    clinn
+    clinvus = clinvar_mut_data_maker('vus')
+    ## merge my protein list with clinvar
+    # clinvar
+    clinvar_ndd = pd.merge(hc, clinvar, left_on='Gene_name', right_on='GeneSymbol')
+    clinvar_ndd.to_csv(cfg.data['hc'] + '/clinvar_and_phenotypes_mutation_positions.csv')
     clinvar_ndd = pd.read_csv(cfg.data['hc'] + '/clinvar_and_phenotypes_mutation_positions.csv')
     clinvar_ndd = clinvar_ndd.drop(columns=['Unnamed: 0.1', 'Unnamed: 0'])
+    # clinvus
+    clinvus_ndd = pd.merge(hc, clinvus, left_on='Gene_name', right_on='GeneSymbol')
+    clinvus_ndd.to_csv(cfg.data['hc'] + '/clinvus_and_phenotypes_mutation_positions.csv')
+    clinvus_ndd = pd.read_csv(cfg.data['hc'] + '/clinvus_and_phenotypes_mutation_positions.csv')
+    clinvus_ndd = clinvus_ndd.drop(columns=['Unnamed: 0.1', 'Unnamed: 0'])
     ## Mobidb downloaded on Aug 8th 2022, 78,106 entries (but 77629 prs after filtering for disorder consensus)
     mobidb = pd.read_csv(cfg.data['clin'] + '/mobidb_result_2022-08-08T13_12_39.379Z.tsv', sep='\t')
     mobidb = mobidb.rename(columns={'start..end': 'startend'})
-    mobidb_disorder = mobidb.loc[mobidb['feature'] == 'prediction-disorder-th_50']  # (77629, 6)
 
-    # ## merge clinvar data positions and stuff with mobidb disorder
-    # clin_mobidb_ndd = pd.merge(clinvar_ndd, mobidb_disorder, on='acc', how='inner')  # (35260, 37)
-    # ## check if modification position is in idr
-    # clin_mobidb_ndd = mutidr_bool_array_maker(clin_mobidb_ndd, 'isin_idr')
-    # ## count number of vars and var/dis ratio
-    # clin_mobidb_ndd = var_cnt_residue_normaliezer(var_countcol_creator(clin_mobidb_ndd))
-    # ##
-    # clin_mobidb_ndd.to_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb.csv')
+    ## merge clinvar data positions and stuff with mobidb disorder
+    # clin_mobidb_ndd, ndd_mobidb_lip = var_in_idr_lip_dfs(clinvar_ndd, mobidb)
     clin_mobidb_ndd = pd.read_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb.csv')
+    ndd_mobidb_lip = pd.read_csv(cfg.data['hc'] + '/mobidb_vars_in_lips_checked.csv')
     in_idr_vars = clin_mobidb_ndd.loc[clin_mobidb_ndd['isin_idr'] == 1]
-    in_idr_var_ids = in_idr_vars['var_id'].unique().tolist()
-    ## Vars in LIPs
-    mobidb_lip = mobidb.loc[mobidb['feature'] == 'prediction-lip-anchor']
-    ndd_mobidb_lip = pd.merge(clinvar_ndd, mobidb_lip, left_on='acc', right_on='acc', how='inner')  # ()
-    ndd_mobidb_lip = ndd_mobidb_lip.loc[ndd_mobidb_lip.var_id.isin(in_idr_var_ids)]
-    ndd_mobidb_lip = mutidr_bool_array_maker(ndd_mobidb_lip, 'isin_lip')
-    ndd_mobidb_lip.to_csv(cfg.data['hc'] + '/mobidb_vars_in_lips_checked.csv')
-    in_lip_vars = ndd_mobidb_lip.loc[ndd_mobidb_lip['isin_lip'] == '1']
-    # ## var in ptm
+    # clinvus
+    vus_mobidb_ndd, vus_mobidb_lip = var_in_idr_lip_dfs(clinvus_ndd, mobidb)
+    vus_mobidb_ndd = pd.read_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb-VUS.csv')
+    vus_mobidb_lip = pd.read_csv(cfg.data['hc'] + '/mobidb_vars_in_lips_checked-VUS.csv')
+    ## var in ptm
     # var_ptm_checked_df = dismaj_var_in_ptm_df_generator(in_idr_vars)
     # var_ptm_checked_df.to_csv(cfg.data['ptm'] + '/in_idr_vars_ptm_checked.csv')
     # var_ptm_checked_df = pd.read_csv(cfg.data['ptm'] + '/in_idr_vars_ptm_checked.csv')

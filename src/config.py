@@ -21,7 +21,7 @@ data = {
     'all-var-desc-cf': absolute + 'data/variants/desc-allvariant/cf',
     'all-var-desc-cc': absolute + 'data/variants/desc-allvariant/cc',
     'all-var-desc-len': absolute + 'data/variants/desc-allvariant/length',
-    'dis': absolute + 'data/Disprot',
+    'dis': absolute + 'data/disprot',
     'jsn': absolute + 'data/json',
     'ptm': absolute + 'data/ptms',
     'ptm-u': absolute + 'data/ptms/uniprot-ptms',
@@ -37,6 +37,7 @@ data = {
     'go': absolute + 'data/string-go',
     'elm': absolute + 'data/elm',
     'ph': absolute + 'data/phens',
+    'pdb': absolute + 'data/pdb',
 
 }
 plots = {

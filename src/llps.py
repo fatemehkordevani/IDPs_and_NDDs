@@ -22,7 +22,7 @@ def var_llps_df_merger(source):
     if source == 'phasepro':
         # var_phasepro_mrg = pd.merge(in_idr_var_df, phasepro_df, on='acc')
         ndd_var_phasepro_mrg = pd.merge(ndd_invar_df, phasepro_df, on='acc')
-        return  ndd_var_phasepro_mrg
+        return ndd_var_phasepro_mrg
     elif source == 'phasep':
         # var_phasep_mrg = pd.merge(in_idr_var_df, phasep_df, left_on='acc', right_on='UniprotEntry')
         ndd_var_phasep_mrg = pd.merge(ndd_invar_df, phasep_df, left_on='acc', right_on='UniprotEntry')
@@ -53,9 +53,10 @@ def phasep():
 if __name__ == '__main__':
     ## the two llps datasets have 28 proteins in common
     ndd_subdf = pd.read_csv(cfg.data['clin'] + '/vars-in_and_out_idr-checked-by-mobidb.csv')
-    ndd_prs = ndd_subdf.loc[(ndd_subdf['phenotype'] == 'ASD') | (ndd_subdf['phenotype'] == 'ID') | (ndd_subdf['phenotype'] == 'Ep')]
+    phens = []
+    ndd_prs = ndd_subdf.loc[(ndd_subdf['phenotype'] == 'ASD') | (ndd_subdf['phenotype'] == 'ID') |
+                            (ndd_subdf['phenotype'] == 'Ep') | (ndd_subdf['phenotype'] == 'ADHD')]
     ndd_prs = ndd_prs['acc'].unique().tolist()
-
 
     ndd_varin_phasep_df = var_llps_df_merger('phasep')  # 2296 # 840
     ndd_varin_phasepro_df = var_llps_df_merger('phasepro')  # 134 # 30
@@ -80,7 +81,6 @@ if __name__ == '__main__':
     drllps = drllps.loc[drllps['UniProt ID'].isin(disph_drllps)]
     drllps_types = drllps.groupby('LLPS Type').count()
 
-
     ## file from this paper:https://www.sciencedirect.com/science/article/pii/S2001037021002804
     ## challenge, open this file correctly, for now not very necessary
     # mlo = pd.read_excel(cfg.data['mlo']+'/complementary-data-paper-S2001037021002804.xlsx', engine='openpyxl')
@@ -90,7 +90,8 @@ if __name__ == '__main__':
     # count number of variants in llps dataset
     llps_ndd_dismaj = ndd_subdf.loc[ndd_subdf.acc.isin(ndd_disphase)]
     llps_ndd_dismaj = llps_ndd_dismaj.drop_duplicates()
-    llps_ndd_dismaj = llps_ndd_dismaj.rename(columns={"in_idr_vars_perc": "IDR mutation fraction (NDD-associated Proteins with LLPS roles)"})
+    llps_ndd_dismaj = llps_ndd_dismaj.rename(
+        columns={"in_idr_vars_perc": "IDR mutation fraction (NDD-associated Proteins with LLPS roles)"})
     # g = sns.violinplot(x=llps_ndd_dismaj['IDR mutation fraction (NDD-associated Proteins with LLPS roles)'])
     # g.set_xlim(0, 1)
     # plt.savefig(cfg.plots['vp'] + '/ndd-llps-roles-disphase.png')
@@ -108,6 +109,3 @@ if __name__ == '__main__':
     mlo_count = mlo_count.reset_index()
     mlo_count = mlo_count.drop(columns=['Entry name', 'Gene names', 'Source'])
     mlo_count = mlo_count.rename(columns={'Entry': 'Count'})
-
-
-

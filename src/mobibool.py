@@ -110,7 +110,7 @@ def hc_all_phens_generator(df):
                   'ASD': ['SFARI_1 Genes (updated 2021 Q3)', 'SFARI_23S Genes (updated 2021 Q3)']}
     for k, v in phens_dict.items():
         for i in v:
-            df.loc[hc[i] == True, i] = k
+            df.loc[df[i] == True, i] = k
     # all phens in one column separated by comma
     df['all_phens'] = df[df.columns[3:]].apply(lambda x: ','.join(x.dropna().astype(str)), axis=1)
     # phens split into multiple rows
