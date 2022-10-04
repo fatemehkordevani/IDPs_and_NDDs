@@ -180,7 +180,6 @@ def var_in_idr_lip_dfs(clin_phen, mobi):
 if __name__ == '__main__':
     hc = pd.read_csv(cfg.data['hc'] + '/smaller-hc-with-phens-column')
     clinvar = clinvar_mut_data_maker('patho')
-    clinn
     clinvus = clinvar_mut_data_maker('vus')
     ## merge my protein list with clinvar
     # clinvar

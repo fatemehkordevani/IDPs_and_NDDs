@@ -54,5 +54,6 @@ plots = {
     'vp-cc': absolute + 'plots/violinplot/cc',
     'vp-len': absolute + 'plots/violinplot/length',
     'go': absolute + 'plots/go-tables',
+    'dc': absolute + 'plots/dolce',
 
 }
