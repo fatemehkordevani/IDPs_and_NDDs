@@ -166,7 +166,6 @@ if __name__ == '__main__':
     for feature in features_lst:
         feature_dict[feature].append(cc_lim_feature_dict[feature])
         feature_dict[feature].append(cf_lim_feature_dict[feature])
-
     # in the end use decorator thing with the @
     phens_lst = ['Human', 'Brain', 'ASD', 'Ep', 'ID', 'ADHD', 'SCZ', 'Cancer', 'T2D']
     ## import dfs # (mobidb)
@@ -189,6 +188,15 @@ if __name__ == '__main__':
     # # multi-idx-dfs
     mobi_disorder_df, mobi_cont_count_df, mobi_length_df = multidx_df_maker(
         [mobi_feature_df, mobidb], ['acc', 'feature', 'phenotype'])
+
+    ## dfs for statistical tests
+    disorder_stat = mobi_disorder_df.loc[(slice(None), 'prediction-disorder-th_50'), phens_lst]
+    disorder_stat.to_csv(cfg.data['stats'] + '/mobidb-disorder-for-stats')
+    lip_stat = disorder_stat = mobi_disorder_df.loc[(slice(None), 'prediction-lip-anchor'), phens_lst]
+    lip_stat.to_csv(cfg.data['stats'] + '/mobidb-lip-for-stats')
+    domain_stat = disorder_stat = mobi_disorder_df.loc[(slice(None), 'homology-domain-merge'), phens_lst]
+    domain_stat.to_csv(cfg.data['stats'] + '/mobidb-domain-for-stats')
+
     ## Boxplots
     # content count
     for key in feature_dict.keys():

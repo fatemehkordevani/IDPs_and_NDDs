@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d172e6fc-798a-4f41-8644-8456cb41b467" name="Changes" comment="elm added">
+    <list default="true" id="d172e6fc-798a-4f41-8644-8456cb41b467" name="Changes" comment="elm plots created">
+      <change afterPath="$PROJECT_DIR$/src/stats.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/disprot.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/disprot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/elm.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/elm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hcGenes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hcGenes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lists.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/lists.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mobibool.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mobibool.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +54,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.elm">
+  <component name="RunManager" selected="Python.lists">
     <configuration name="clinvar" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -163,9 +166,6 @@
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -269,6 +269,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="stats" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="IDPs_and_NDDs" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/stats.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="vus" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="IDPs_and_NDDs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -328,7 +350,10 @@
       <workItem from="1664269030977" duration="3296000" />
       <workItem from="1664366801770" duration="7539000" />
       <workItem from="1664788557363" duration="7421000" />
-      <workItem from="1664872211600" duration="13070000" />
+      <workItem from="1664872211600" duration="13108000" />
+      <workItem from="1665132313009" duration="9295000" />
+      <workItem from="1665395951194" duration="3766000" />
+      <workItem from="1665491717941" duration="1430000" />
     </task>
     <task id="LOCAL-00001" summary="new project + clinvar.py + handling phenotypes">
       <created>1661156886723</created>
@@ -365,7 +390,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664812396046</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="elm plots created">
+      <created>1664899125329</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1664899125329</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -388,6 +420,7 @@
     <MESSAGE value="all works well" />
     <MESSAGE value="phenotypes module added" />
     <MESSAGE value="elm added" />
-    <option name="LAST_COMMIT_MESSAGE" value="elm added" />
+    <MESSAGE value="elm plots created" />
+    <option name="LAST_COMMIT_MESSAGE" value="elm plots created" />
   </component>
 </project>

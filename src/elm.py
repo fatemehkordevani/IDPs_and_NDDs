@@ -44,10 +44,10 @@ def multiple_donut_plots(df):
     fig.subplots_adjust(wspace=.2)  # Space between charts
     fig.delaxes(axes[2][1])
 
-    title = fig.suptitle('ELM classes with variants occurring inside them', y=.95, fontsize=20, color=font_color)
+    title = fig.suptitle('ELM classes with variants (VUS) occurring inside them', y=.95, fontsize=20, color=font_color)
     # To prevent the title from being cropped
     plt.subplots_adjust(top=0.85, bottom=0.15)
-    plt.savefig(cfg.plots['dc'] + '/multiple_donuts_ELM_classes_per_phenotype_var_in_elm.png')
+    plt.savefig(cfg.plots['dc'] + '/multiple_donuts_ELM_classes_per_phenotype_var_in_elm_VUS.png')
     plt.show()
     return
 
@@ -121,5 +121,10 @@ if __name__ == '__main__':
     clin_elm = pd.merge(hc_clin, elm, on='acc')
     clin_elm = var_countcol_creator(isin_elm_array_maker(clin_elm, 'isin_elm'))
     in_elm_vars = clin_elm.loc[clin_elm['isin_elm'] == 1]
+    ## VUS
+    hc_vus = pd.read_csv(cfg.data['hc'] + '/clinvus_and_phenotypes_mutation_positions.csv')
+    vus_elm = pd.merge(hc_vus, elm, on='acc')
+    vus_elm = var_countcol_creator(isin_elm_array_maker(vus_elm, 'isin_elm'))
+    in_elm_vus = vus_elm.loc[vus_elm['isin_elm'] == 1]
 
-    multiple_donut_plots(df_preparare_multiple_donuts(in_elm_vars))
+    multiple_donut_plots(df_preparare_multiple_donuts(in_elm_vus))

@@ -18,7 +18,8 @@ mobidb_af = mobidb.loc[mobidb['feature'] == 'prediction-plddt-alphafold']
 mobidb_af = pd.merge(hc, mobidb_af, on='acc')
 mobidb_af.to_csv(cfg.data['hc'] + '/hc_list_mobidb_alphafold.csv')
 
-disprot_ideal = pd.concat([mobidb_disprot, mobidb_ideal]).sort_values('feature').drop_duplicates(subset=['acc'], keep='first') # 322 unique proteins
+disprot_ideal = pd.concat([mobidb_disprot, mobidb_ideal]).sort_values('feature').drop_duplicates(subset=['acc'],
+                                                                                                 keep='first')  # 322 unique proteins
 phens_lst = ['ID', 'ASD', 'ADHD', 'Ep']
 disprot_ideal.to_csv(cfg.data['hc'] + '/hc_list_mobidb_based_on_Disprot_and_IDEAL.csv')
 
@@ -31,6 +32,11 @@ pdb.columns = ['pdb', 'method', 'resolution', 'acc']
 pdb['acc'] = pdb['acc'].str.replace('\(', "")
 pdb['acc'] = pdb['acc'].str.replace('\)', "")
 
-
 all_pdb = pd.merge(disprot_ideal_af, pdb, on='acc')
 all_pdb.to_csv(cfg.data['pdb'] + '/Disprot-ideal-alphafold_with_PDB.csv')
+
+## preparing NDD protein list for curation based on List from federica with PDBs added here 11/10/2022
+hc_pdb = pd.merge(hc, pdb, on='acc')
+curate = pd.read_csv(cfg.data['dis-cu'] + '/Homo_sapiens_9606 - Homo_sapiens_9606.tsv', sep='\t')
+curate_hc_pdb = pd.merge(hc_pdb, curate, on='acc')
+curate_hc_pdb.to_csv(cfg.data['dis-cu'] + '/hc-proteins-for-curation.csv')

@@ -38,6 +38,8 @@ data = {
     'elm': absolute + 'data/elm',
     'ph': absolute + 'data/phens',
     'pdb': absolute + 'data/pdb',
+    'stats': absolute + 'data/statistics',
+    'dis-cu': absolute + 'data/disprot/curation',
 
 }
 plots = {

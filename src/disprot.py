@@ -167,18 +167,26 @@ if __name__ == '__main__':
     z = dis_hc.groupby(['term', 'phenotype']).count()  ## to check for the more existing features
     dis_dis = dis_hc.loc[dis_hc['term'] == 'IDPO:00076']
     dis_dis = dis_dis.reset_index()
-    dis_dis.to_csv(cfg.data['dis'] + '/disprot_disorder_for_dis_content_boxplot_r.csv') # for Rstudio
+    dis_dis.to_csv(cfg.data['dis'] + '/disprot_disorder_for_dis_content_boxplot_r.csv')
     dis_bind = dis_hc.loc[dis_hc['term'] == 'GO:0005515']  # protein binding
     dis_bind = dis_bind.reset_index()
-    dis_ord = dis_hc.loc[dis_hc['term'] == 'IDPO:00050']  # disorde to order
+    dis_bind.to_csv(cfg.data['dis'] + '/disprot_binding_for_dis_content_boxplot_r.csv')
+    dis_ord = dis_hc.loc[dis_hc['term'] == 'IDPO:00050']  # disorder to order
     dis_ord = dis_ord.reset_index()
+    dis_ord.to_csv(cfg.data['dis'] + '/disprot_D-to-O_for_dis_content_boxplot_r.csv')
+
     # box_plotter(dis_dis)
     # sort phenotypes
     # merging with Clinvar to check vars in IDR
     # dis_dis = pd.merge(clinvar_mut_data_maker('patho'), dis_dis, left_on='GeneSymbol', right_on='Gene_name', how='inner')
-    dis_bind = pd.merge(clinvar_mut_data_maker('vus'), dis_bind, left_on='GeneSymbol', right_on='Gene_name', how='inner')
+    # dis_bind = pd.merge(clinvar_mut_data_maker('vus'), dis_bind, left_on='GeneSymbol', right_on='Gene_name', how='inner')
     # dis_dis = var_cnt_residue_normaliezer(var_countcol_creator(mutidr_bool_array_maker(dis_dis, 'isin_idr')))
-    # dis_dis.to_csv(cfg.data['dis'] + '/Disprot-disorder-variants-in-out-checked.csv')
-    dis_bind = var_cnt_residue_normaliezer(var_countcol_creator(mutidr_bool_array_maker(dis_bind, 'isin_idr')))
-    dis_bind.to_csv(cfg.data['dis'] + '/Disprot-binding-VUS_variants-in-out-checked.csv')
+    dis_dis = pd.read_csv(cfg.data['dis'] + '/Disprot-disorder-variants-in-out-checked.csv')
+    in_idr_vars = dis_dis.loc[dis_dis['isin_idr'] == 1]
+    phens = ['ASD', 'ADHD', 'Ep', 'ID']
+    in_idr_vars = in_idr_vars.loc[in_idr_vars.phenotype.isin(phens)]
+    in_idr_vars.to_csv(cfg.data['dis'] + '/Disprot-P_LP-in-disorder.csv')
+
+    # dis_bind = var_cnt_residue_normaliezer(var_countcol_creator(mutidr_bool_array_maker(dis_bind, 'isin_idr')))
+    # dis_bind.to_csv(cfg.data['dis'] + '/Disprot-binding-VUS_variants-in-out-checked.csv')
 
